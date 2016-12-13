@@ -13,12 +13,12 @@ fn main() {
             
         chars.sort();
 
-        let most_frequent_char = chars.iter()
+        let least_frequent_char = chars.iter()
             .group_by(|c| *c).into_iter()
             .map(|(key, elems)| (key, elems.count()))
             .min_by_key(|kv| kv.1)
             .unwrap().0;
-        print!("{}", most_frequent_char);
+        print!("{}", least_frequent_char);
     }
     
     println!("");
