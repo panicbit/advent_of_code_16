@@ -11,8 +11,8 @@ fn main() {
                 'R' => pad.right(),
                 _ => panic!("Unknown dir: {}", dir),
             }
-            assert!(1 <= pad.key() && pad.key() <= 9);
         }
+        
         print!("{}", pad.key());
     }
 
