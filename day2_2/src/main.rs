@@ -12,6 +12,7 @@ fn main() {
                 _ => panic!("Unknown dir: {}", dir),
             }
         }
+        
         print!("{}", pad.key());
     }
 
