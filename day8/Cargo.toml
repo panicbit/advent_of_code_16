@@ -1,0 +1,8 @@
+[package]
+authors = ["panicbit <panicbit.dev@gmail.com>"]
+name = "day8"
+version = "0.1.0"
+
+[dependencies]
+ndarray = "0.7.1"
+regex = "0.1.80"
