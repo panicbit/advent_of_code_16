@@ -1,0 +1,8 @@
+[package]
+authors = ["panicbit <panicbit.dev@gmail.com>"]
+name = "day14"
+version = "0.1.0"
+
+[dependencies]
+iterslide = "0.0.5"
+rust-crypto = "0.2.36"
