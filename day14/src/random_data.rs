@@ -1,4 +1,3 @@
-use hex::ToHex;
 use crypto::md5::Md5;
 use crypto::digest::Digest;
 
@@ -19,6 +18,7 @@ impl RandomData {
 impl Iterator for RandomData {
     type Item = String;
     fn next(&mut self) -> Option<String> {
+        use ::std::fmt::Write;
         let mut md5 = Md5::new();
         let hash = &mut [0; 16];
 
@@ -26,8 +26,13 @@ impl Iterator for RandomData {
         md5.input(self.index.to_string().as_bytes());
         md5.result(hash);
 
+        let mut hex = String::with_capacity(32);
+        for byte in hash {
+            write!(hex, "{:02x}", byte).unwrap();
+        }
+
         self.index += 1;
 
-        Some(hash.to_hex())
+        Some(hex)
     }
 }

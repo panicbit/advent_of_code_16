@@ -1,5 +1,4 @@
 extern crate crypto;
-extern crate hex;
 extern crate iterslide;
 
 mod random_data;
