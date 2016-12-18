@@ -1,0 +1,7 @@
+[package]
+authors = ["panicbit <panicbit.dev@gmail.com>"]
+name = "day18"
+version = "0.1.0"
+
+[dependencies]
+iterslide = "0.0.5"
