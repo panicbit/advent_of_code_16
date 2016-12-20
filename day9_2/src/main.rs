@@ -57,10 +57,6 @@ impl<'a> Datum<'a> {
                 s.len()
             },
             Datum::Compressed(s, repeats) => {
-                if !s.contains('(') {
-                    return repeats * s.len();
-                }
-
                 let data = parse_data(s.as_bytes()).to_result().unwrap();
                 repeats * data.iter().map(|datum| datum.count_bytes()).sum::<usize>()
             },
