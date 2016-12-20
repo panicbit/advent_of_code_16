@@ -1,5 +1,3 @@
-extern crate itertools;
-
 fn main() {
     let input = 3004953;
     let elves: Vec<u32> = (1..input+1).collect();
