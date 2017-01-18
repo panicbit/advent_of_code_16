@@ -12,7 +12,9 @@ fn main() {
         col3.push(values.next().unwrap());
     }
 
-    let n = triangles_in_column(&col1) + triangles_in_column(&col2) + triangles_in_column(&col3);
+    let n =   triangles_in_column(&col1)
+            + triangles_in_column(&col2)
+            + triangles_in_column(&col3);
     println!("{}", n);
 }
 
