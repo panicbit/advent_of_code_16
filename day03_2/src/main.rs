@@ -1,5 +1,3 @@
-extern crate itertools;
-use itertools::Itertools;
 
 fn main() {
     let input = include_str!("../input.txt");
@@ -19,8 +17,7 @@ fn main() {
 }
 
 fn triangles_in_column(col: &[u32]) -> usize {
-    col.iter().cloned().chunks(3).into_iter()
-    .map(|sides| sides.collect::<Vec<_>>())
+    col.chunks(3)
     .filter(|triangle| is_triangle(&triangle))
     .count()
 }
