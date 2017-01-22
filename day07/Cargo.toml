@@ -2,6 +2,3 @@
 authors = ["panicbit <panicbit.dev@gmail.com>"]
 name = "day7"
 version = "0.1.0"
-
-[dependencies]
-nom = "2.0.1"

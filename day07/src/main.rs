@@ -1,47 +1,15 @@
-#[macro_use]
-extern crate nom;
-
-use std::char;
 use std::str;
 
 fn main() {
     let input = include_str!("../input.txt");
 
     let n = input.lines()
-        .map(|line| Ipv7::from_str(line.trim()).unwrap())
+        .map(|line| Ipv7::from_str(line.trim()))
         .filter(Ipv7::supports_tls)
         .count();
 
     println!("{}", n);
 }
-
-fn is_raw_segment(b: u8) -> bool {
-    char::from_u32(b as u32).map(char::is_alphabetic).unwrap_or(false)
-}
-
-named!(raw_segment<&str>, do_parse!(
-       segment: take_while1_s!(is_raw_segment)
-    >> (str::from_utf8(segment).unwrap())
-));
-
-named!(normal_segment<Segment>, do_parse!(
-    segment: raw_segment
-    >> (Segment::Normal(segment))
-));
-
-named!(hyper_segment<Segment>, do_parse!(
-       tag!("[")
-    >> segment: raw_segment
-    >> tag!("]")
-    >> (Segment::Hyper(segment))
-));
-
-named!(ipv7<Ipv7>, do_parse!(
-       segments: many1!(alt!(
-           normal_segment | hyper_segment
-       ))
-    >> (Ipv7(segments))
-));
 
 #[derive(Debug,PartialEq)]
 enum Segment<'a> {
@@ -72,8 +40,22 @@ impl<'a> Segment<'a> {
 struct Ipv7<'a>(Vec<Segment<'a>>);
 
 impl<'a> Ipv7<'a> {
-    fn from_str(s: &'a str) -> Result<Self, nom::Err> {
-        ipv7(s.as_bytes()).to_result()
+    fn from_str(mut s: &'a str) -> Ipv7 {
+        let mut segments = Vec::new();
+
+        while !s.is_empty() {
+            if s.starts_with('[') {
+                let end = s.find(']').expect("closing ']'");
+                segments.push(Segment::Hyper(&s[1..end]));
+                s = &s[end+1..];
+            } else {
+                let end = s.find('[').unwrap_or(s.len());
+                segments.push(Segment::Normal(&s[..end]));
+                s = &s[end..];
+            }
+        }
+            
+        Ipv7(segments)
     }
 
     fn supports_tls(&self) -> bool {
